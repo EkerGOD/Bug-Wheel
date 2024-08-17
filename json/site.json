@@ -1,0 +1,333 @@
+{
+  "sites": [
+    {
+      "uid": 1,
+      "name": "食品伙伴网-国际预警",
+      "url": "http://news.foodmate.net/yujing/",
+      "actions": [
+        {
+          "name": "table",
+          "xpath": "/html/body/div[11]/div[2]/div/div/ul",
+          "type": "branch",
+          "next": [
+            {
+              "name": "li",
+              "xpath": "li",
+              "type": "branch",
+              "next": [
+                {
+                  "name": "a",
+                  "xpath": "a",
+                  "type": "jump",
+                  "next": [
+                    {
+                      "name": "title",
+                      "xpath": "//*[@id=\"title\"]",
+                      "type": "text",
+                      "next": null
+                    },
+                    {
+                      "name": "content",
+                      "xpath": "//*[@id=\"article\"]",
+                      "type": "all_text",
+                      "next": null
+                    },
+                    {
+                      "name": "time",
+                      "xpath": "/html/body/div[11]/div[2]/div/div[6]/a",
+                      "type": "text",
+                      "next": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "internal": 10
+    },
+    {
+      "uid": 2,
+      "name": "食品伙伴网-中国食品",
+      "url": "http://news.foodmate.net/guonei/",
+      "actions": [
+        {
+          "name": "table",
+          "xpath": "/html/body/div[11]/div[2]/div/div/ul",
+          "type": "branch",
+          "next": [
+            {
+              "name": "li",
+              "xpath": "li",
+              "type": "branch",
+              "next": [
+                {
+                  "name": "a",
+                  "xpath": "a",
+                  "type": "jump",
+                  "next": [
+                    {
+                      "name": "title",
+                      "xpath": "//*[@id=\"title\"]",
+                      "type": "text",
+                      "next": null
+                    },
+                    {
+                      "name": "content",
+                      "xpath": "//*[@id=\"article\"]",
+                      "type": "all_text",
+                      "next": null
+                    },
+                    {
+                      "name": "time",
+                      "xpath": "/html/body/div[11]/div[2]/div/div[6]/a",
+                      "type": "text",
+                      "next": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "internal": 10
+    },
+    {
+      "uid": 3,
+      "name": "食品伙伴网-权威发布",
+      "url": "http://news.foodmate.net/quanwei/",
+      "actions": [
+        {
+          "name": "table",
+          "xpath": "/html/body/div[11]/div[2]/div/div/ul",
+          "type": "branch",
+          "next": [
+            {
+              "name": "li",
+              "xpath": "li",
+              "type": "branch",
+              "next": [
+                {
+                  "name": "a",
+                  "xpath": "a",
+                  "type": "jump",
+                  "next": [
+                    {
+                      "name": "title",
+                      "xpath": "//*[@id=\"title\"]",
+                      "type": "text",
+                      "next": null
+                    },
+                    {
+                      "name": "content",
+                      "xpath": "//*[@id=\"article\"]",
+                      "type": "all_text",
+                      "next": null
+                    },
+                    {
+                      "name": "time",
+                      "xpath": "/html/body/div[11]/div[2]/div/div[6]/a",
+                      "type": "text",
+                      "next": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "internal": 10
+    },
+    {
+      "uid": 4,
+      "name": "食品伙伴网-权威发布",
+      "url": "http://news.foodmate.net/quanwei/",
+      "actions": [
+        {
+          "name": "table",
+          "xpath": "/html/body/div[11]/div[2]/div/div/ul",
+          "type": "branch",
+          "next": [
+            {
+              "name": "li",
+              "xpath": "li",
+              "type": "branch",
+              "next": [
+                {
+                  "name": "a",
+                  "xpath": "a",
+                  "type": "jump",
+                  "next": [
+                    {
+                      "name": "title",
+                      "xpath": "//*[@id=\"title\"]",
+                      "type": "text",
+                      "next": null
+                    },
+                    {
+                      "name": "content",
+                      "xpath": "//*[@id=\"article\"]",
+                      "type": "all_text",
+                      "next": null
+                    },
+                    {
+                      "name": "time",
+                      "xpath": "/html/body/div[11]/div[2]/div/div[6]/a",
+                      "type": "text",
+                      "next": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "internal": 10
+    },
+    {
+      "uid": 5,
+      "name": "食品伙伴网-国际食品",
+      "url": "http://news.foodmate.net/guoji/",
+      "actions": [
+        {
+          "name": "table",
+          "xpath": "/html/body/div[11]/div[2]/div/div/ul",
+          "type": "branch",
+          "next": [
+            {
+              "name": "li",
+              "xpath": "li",
+              "type": "branch",
+              "next": [
+                {
+                  "name": "a",
+                  "xpath": "a",
+                  "type": "jump",
+                  "next": [
+                    {
+                      "name": "title",
+                      "xpath": "//*[@id=\"title\"]",
+                      "type": "text",
+                      "next": null
+                    },
+                    {
+                      "name": "content",
+                      "xpath": "//*[@id=\"article\"]",
+                      "type": "all_text",
+                      "next": null
+                    },
+                    {
+                      "name": "time",
+                      "xpath": "/html/body/div[11]/div[2]/div/div[6]/a",
+                      "type": "text",
+                      "next": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "internal": 10
+    },
+    {
+      "uid": 6,
+      "name": "食品伙伴网-观点评论",
+      "url": "http://news.foodmate.net/wangyou/",
+      "actions": [
+        {
+          "name": "table",
+          "xpath": "/html/body/div[11]/div[2]/div/div/ul",
+          "type": "branch",
+          "next": [
+            {
+              "name": "li",
+              "xpath": "li",
+              "type": "branch",
+              "next": [
+                {
+                  "name": "a",
+                  "xpath": "a",
+                  "type": "jump",
+                  "next": [
+                    {
+                      "name": "title",
+                      "xpath": "//*[@id=\"title\"]",
+                      "type": "text",
+                      "next": null
+                    },
+                    {
+                      "name": "content",
+                      "xpath": "//*[@id=\"article\"]",
+                      "type": "all_text",
+                      "next": null
+                    },
+                    {
+                      "name": "time",
+                      "xpath": "/html/body/div[11]/div[2]/div/div[6]/a",
+                      "type": "text",
+                      "next": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "internal": 10
+    },
+    {
+      "uid": 7,
+      "name": "澳门特别行政区政府-国际咨询",
+      "url": "https://www.foodsafety.gov.mo/c/internews/table",
+      "actions": [
+        {
+          "name": "table",
+          "xpath": "/html/body/div[11]/div[2]/div/div/ul",
+          "type": "branch",
+          "next": [
+            {
+              "name": "li",
+              "xpath": "li",
+              "type": "branch",
+              "next": [
+                {
+                  "name": "a",
+                  "xpath": "a",
+                  "type": "jump",
+                  "next": [
+                    {
+                      "name": "title",
+                      "xpath": "//*[@id=\"title\"]",
+                      "type": "text",
+                      "next": null
+                    },
+                    {
+                      "name": "content",
+                      "xpath": "//*[@id=\"article\"]",
+                      "type": "all_text",
+                      "next": null
+                    },
+                    {
+                      "name": "time",
+                      "xpath": "/html/body/div[11]/div[2]/div/div[6]/a",
+                      "type": "text",
+                      "next": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "internal": 10
+    }
+  ]
+}
