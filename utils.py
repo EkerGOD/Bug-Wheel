@@ -5,6 +5,7 @@ import requests
 from lxml import html
 
 import re
+import logging
 
 
 def getTree(url):
@@ -42,3 +43,23 @@ def strConvert(input_str):
         return float(input_str)
     else:
         return input_str
+
+def initial_logger(name, log_name, root_logger=False):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+    if root_logger:
+        handler = logging.FileHandler(log_name)
+        handler.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+
+    return logger
+
+
+def is_connected(url):
+    try:
+        requests.get(url, timeout=5)
+        return True
+    except:
+        return False

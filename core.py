@@ -1,100 +1,66 @@
+import traceback
+
+import crawl
 from file import HistoryController, SiteController
-from crawl import CrawlPool
-from porter import PorterPool
-import queue
-from database import MongoDB
-from queue_controller import QueueController
-from ui import Application
-from command import CommandController, buildCommand
 import config
 
+import logging
+import time
 
-def initialize():
-    # 构建窗口UI
-    app = Application()
+from utils import initial_logger
 
-    # 构建历史记录文件管理器
-    historyController = HistoryController(config.HISTORY_PATH)
-    # 构建站点数据文件管理器
+
+def start_crawl():
+    # 初始化日志系统
+    now = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
+    log_name = 'log/' + now + '.log'
+    logger = initial_logger('main', log_name, root_logger=True)
+
+    # 启动爬虫
+    logger.info('Crawl starting...')
+
+    # 获取站点数据
+    logger.info('Getting site...')
     siteController = SiteController(config.SITE_PATH)
+    logger.info('Get ' + str(len(siteController.get()["sites"])) + ' sites')
 
-    # 构建数据队列
-    data_queue = queue.Queue()
+    # 获取历史数据
+    logger.info('Getting history...')
+    historyController = HistoryController(config.HISTORY_PATH)
+    logger.info('Get ' + str(len(historyController.get())) + ' history(The extra one is the template.)')
 
-    # 构建数据库
-    mongoDB = MongoDB()
+    # 检查需要爬取的站点
+    logger.info('Check the sites that need to be crawled...')
+    sites_need_to_be_crawled = []
+    for site in siteController.get()['sites']:
+        logger.info('Checking ' + site['name'] + '...')
+        # 获取站点配置爬取间隔
+        internal = site['internal']
+        # 获取上次爬取时间字符串
+        # logger.debug(historyController.get())
+        # logger.debug(site['uid'])
+        latest_crawl_time = historyController.get()[str(site['uid'])]['latest_crawl_time']
+        # 从时间字符串提取时间戳
+        latest_crawl_timestamp = time.mktime(time.strptime(latest_crawl_time, "%Y-%m-%d-%H_%M_%S"))
+        # 获取当前时间戳
+        now_timestamp = time.time()
 
-    # 初始化搬运工
-    porterPool = PorterPool(data_queue)
+        # 计算实际间隔
+        actual_internal = now_timestamp - latest_crawl_timestamp
 
-    # 初始化队列控制器
-    queueController = QueueController(data_queue)
+        # 当实际间隔大于配置间隔，将站点放入待爬取列表
+        if actual_internal >= internal:
+            logger.info('This site is added to the list.')
+            sites_need_to_be_crawled.append(site)
+    logger.info('Get ' + str(len(sites_need_to_be_crawled)) + ' sites that need to be crawled')
 
-    # 构建爬虫池
-    crawlPool = CrawlPool(data_queue)
+    thread_list = crawl.build(sites_need_to_be_crawled, historyController, log_name)
 
-    # 初始化命令控制器
-    commandController = CommandController()
+    for thread in thread_list:
+        thread.start()
 
-    # 仓库存储列表
-    systemDict = {
-        'historyController': historyController,
-        'siteController': siteController,
-        'mongoDB': mongoDB,
-        'porterPool': porterPool,
-        'queueController': queueController,
-        'crawlPool': crawlPool,
-        'commandController': commandController,
-        'app': app
-    }
-    """
-    定义动态类
-    动态类可以被暂停启动，查询状态
-    """
-    threadSystem = [
-        "porterPool",
-        "queueController",
-        "crawlPool"
-    ]
-    # 构建系统仓库
-    systemStore = SystemStore(systemDict, threadSystem)
+    # 等待全部线程执行完毕
+    for thread in thread_list:
+        thread.join()
 
-    # 给所有系统共享系统仓库
-    for key, value in systemDict.items():
-        value.systemStore = systemStore
-        value.binding()  # 触发每一个系统绑定函数
-    """
-    所有需要用到系统仓库的都放在绑定后使用
-    !!!需要绑定的内容!!!
-    """
-    # 构建爬虫池
-    crawlPool.build()
-    # 构建搬运工
-    porterPool.build()
-    # 构建命令控制器
-    buildCommand(commandController)
-    # 构建队列控制器
-    queueController.build()
-    # return crawlPool
-
-    return systemStore
-
-
-class SystemStore:
-    def __init__(self, systemDict, threadSystem):
-        self.systemDict = systemDict
-        self.threadSystem = threadSystem
-
-    def get(self, name=None):
-        if name is None:
-            return self.systemDict
-        else:
-            if name not in self.systemDict:
-                print("访问的系统不存在！")
-            return self.systemDict[name]
-
-
-if __name__ == '__main__':
-    newSystemStore = initialize()
-    print(newSystemStore.get())
-    print(newSystemStore.get('historyController').systemStore)
+    logger.info('Crawl completed!')

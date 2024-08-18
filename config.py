@@ -1,8 +1,16 @@
+from dynaconf import Dynaconf
+
+settings = Dynaconf(
+    settings_file="settings.toml",
+)
 """
 数据库配置
 """
 # 默认地址
-HOST = "mongodb://43.139.177.84"
+PRD_HOST = "mongodb://43.139.177.84"
+# 开发版本地址
+DEV_HOST = "mongodb://localhost"
+
 
 # 默认端口
 PORT = 27017

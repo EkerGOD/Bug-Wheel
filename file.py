@@ -1,7 +1,6 @@
 from idlelib.iomenu import encoding
 
 import json
-from base import System
 
 
 class File:
@@ -13,7 +12,7 @@ class File:
         return self.data
 
 
-class HistoryController(File, System):
+class HistoryController(File):
     def __init__(self, path):
         super().__init__(path)
         with open(self.path, 'r') as file:
@@ -32,7 +31,7 @@ class HistoryController(File, System):
         self.data[str(uid)] = self.data['template']
 
 
-class SiteController(File, System):
+class SiteController(File):
     def __init__(self, path):
         super().__init__(path)
         with open(self.path, 'r', encoding='utf-8') as file:

@@ -1,12 +1,17 @@
 from pymongo import MongoClient
 import config
-from base import System
 
+from utils import initial_logger
 
-class MongoDB(System):
-    def __init__(self):
-        super().__init__()
-        self.client = MongoClient(config.HOST, config.PORT)
+class NewMongoDB:
+    def __init__(self, log_name):
+        self.logger = initial_logger('main.database.mongoDB', log_name)
+        self.logger.info('initialize mongoDB...')
+        # 根据环境不同切换主机地址
+        host = config.DEV_HOST if config.settings.MODE == 'DEV' else config.PRD_HOST
+        self.logger.info('Connecting to ' + host + ':' + str(config.PORT))
+        self.client = MongoClient(config.DEV_HOST, config.PORT)
+        self.logger.info('Connect successfully')
         self.db = self.client[config.DATABASE]
 
     def changeDB(self, database):
@@ -19,5 +24,5 @@ class MongoDB(System):
         else:
             insert_result = col.insert_one(doc)
 
-        self.systemStore.get('app').write(f"[mongoDB]{insert_result}")
+        self.logger.info(f'{insert_result}')
         return insert_result
